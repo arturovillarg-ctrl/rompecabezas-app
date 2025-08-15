@@ -1,6 +1,11 @@
-# Getting Started with Create React App
+# Rompecabezas App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicación para gestionar mi colección de rompecabezas con React y Supabase.
+
+## Características
+- Lista de rompecabezas
+- Conexión con base de datos Supabase
+- Interfaz web responsive
 
 ## Available Scripts
 
