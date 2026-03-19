@@ -39,6 +39,9 @@ const PuzzleList = () => {
           });
         }
 
+
+        
+
         console.log('Respuesta de Supabase:', { 
           data, 
           error, 
@@ -88,51 +91,108 @@ const PuzzleList = () => {
   }
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Mi colección de rompecabezas 🧩</h2>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+    <div style={{ 
+      padding: '1rem', 
+      maxWidth: '1200px', 
+      margin: '0 auto',
+      width: '100%'
+    }}>
+      <h2 style={{ 
+        textAlign: 'center',
+        color: '#333',
+        marginBottom: '2rem',
+        fontSize: 'clamp(1.5rem, 4vw, 2.5rem)'
+      }}>
+        Mi colección de rompecabezas 🧩
+      </h2>
+      <div style={{ 
+        display: 'grid',
+        gap: '1.5rem',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))'
+      }}>
         {puzzles.length === 0 ? (
-          <li>No hay rompecabezas para mostrar.</li>
+          <div style={{ 
+            textAlign: 'center', 
+            padding: '2rem',
+            gridColumn: '1 / -1'
+          }}>
+            No hay rompecabezas para mostrar.
+          </div>
         ) : (
           puzzles.map(puzzle => (
-            <li key={puzzle.IdRompecabezas} style={{ marginBottom: '2rem', border: '1px solid #ddd', padding: '1rem', borderRadius: '8px' }}>
-              <h3 style={{ marginTop: 0 }}>{puzzle.Nombre}</h3>
-              <div style={{ display: 'flex', gap: '2rem' }}>
-                <div style={{ flexBasis: '200px' }}>
-                  {puzzle.FotoCaja && (
-                    <img 
-                      src={puzzle.FotoCaja} 
-                      alt={puzzle.Nombre} 
-                      style={{ 
-                        width: '200px', 
-                        height: '200px', 
-                        objectFit: 'cover',
-                        borderRadius: '4px'
-                      }}
-                      onError={(e) => {
-                        console.error('Error cargando imagen:', puzzle.FotoCaja);
-                        e.target.style.display = 'none';
-                      }}
-                    />
-                  )}
+            <div key={puzzle.IdRompecabezas} style={{ 
+              border: '1px solid #ddd', 
+              padding: '1rem', 
+              borderRadius: '12px',
+              backgroundColor: 'white',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+              overflow: 'hidden'
+            }}>
+              <h3 style={{ 
+                marginTop: 0, 
+                marginBottom: '1rem',
+                fontSize: '1.2rem',
+                color: '#333'
+              }}>
+                {puzzle.Nombre}
+              </h3>
+              
+              {puzzle.FotoCaja && (
+                <div style={{ 
+                  width: '100%',
+                  marginBottom: '1rem',
+                  textAlign: 'center'
+                }}>
+                  <img 
+                    src={puzzle.FotoCaja} 
+                    alt={puzzle.Nombre} 
+                    style={{ 
+                      width: '100%',
+                      maxWidth: '250px',
+                      height: '200px', 
+                      objectFit: 'cover',
+                      borderRadius: '8px'
+                    }}
+                    onError={(e) => {
+                      console.error('Error cargando imagen:', puzzle.FotoCaja);
+                      e.target.style.display = 'none';
+                    }}
+                  />
                 </div>
-                <div>
-                  <p><strong>Marca:</strong> {puzzle.Marca}</p>
-                  <p><strong>Tema:</strong> {puzzle.Tema}</p>
-                  <p><strong>Piezas:</strong> {puzzle.CantidadPiezas}</p>
-                  <p><strong>Dimensiones:</strong> {puzzle.DimensionVertical} x {puzzle.DimensionHorizontal} cm</p>
-                  <p><strong>Propietario:</strong> {puzzle.Propietario}</p>
-                  {puzzle.PrestadoA && <p><strong>Prestado a:</strong> {puzzle.PrestadoA}</p>}
-                  {puzzle.PiezasFaltantes > 0 && <p><strong>Piezas faltantes:</strong> {puzzle.PiezasFaltantes}</p>}
-                  {puzzle.Observaciones && <p><strong>Observaciones:</strong> {puzzle.Observaciones}</p>}
-                  {puzzle.FechaCreado && <p><strong>Fecha:</strong> {new Date(puzzle.FechaCreado).toLocaleDateString()}</p>}
-                  {puzzle.Origen && <p><strong>Origen:</strong> {puzzle.Origen}</p>}
-                </div>
+              )}
+              
+              <div style={{ 
+                display: 'grid',
+                gap: '0.5rem',
+                fontSize: '0.9rem'
+              }}>
+                {puzzle.Marca && <p style={{ margin: 0 }}><strong>Marca:</strong> {puzzle.Marca}</p>}
+                {puzzle.Tema && <p style={{ margin: 0 }}><strong>Tema:</strong> {puzzle.Tema}</p>}
+                {puzzle.CantidadPiezas && <p style={{ margin: 0 }}><strong>Piezas:</strong> {puzzle.CantidadPiezas}</p>}
+                {(puzzle.DimensionVertical && puzzle.DimensionHorizontal) && (
+                  <p style={{ margin: 0 }}>
+                    <strong>Dimensiones:</strong> {puzzle.DimensionVertical} x {puzzle.DimensionHorizontal} cm
+                  </p>
+                )}
+                {puzzle.Propietario && <p style={{ margin: 0 }}><strong>Propietario:</strong> {puzzle.Propietario}</p>}
+                {puzzle.PrestadoA && <p style={{ margin: 0, color: '#e67e22' }}><strong>Prestado a:</strong> {puzzle.PrestadoA}</p>}
+                {puzzle.PiezasFaltantes > 0 && (
+                  <p style={{ margin: 0, color: '#e74c3c' }}>
+                    <strong>Piezas faltantes:</strong> {puzzle.PiezasFaltantes}
+                  </p>
+                )}
+                {puzzle.Observaciones && <p style={{ margin: 0 }}><strong>Observaciones:</strong> {puzzle.Observaciones}</p>}
+                {puzzle.FechaCreado && (
+                  <p style={{ margin: 0, fontSize: '0.8rem', color: '#666' }}>
+                    <strong>Fecha:</strong> {new Date(puzzle.FechaCreado).toLocaleDateString()}
+                  </p>
+                )}
+                {puzzle.Origen && <p style={{ margin: 0 }}><strong>Origen:</strong> {puzzle.Origen}</p>}
               </div>
-            </li>
+            </div>
           ))
         )}
-      </ul>
+      </div>
     </div>
   )
 }
