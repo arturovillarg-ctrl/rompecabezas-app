@@ -39,6 +39,9 @@ const PuzzleList = () => {
           });
         }
 
+
+        
+
         console.log('Respuesta de Supabase:', { 
           data, 
           error, 
